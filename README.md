@@ -9,9 +9,9 @@
 VariableValue<Integer> count = new VariableValue<>(4);
 VariableValue<Integer> treshold = new VariableValue<>(10);
 
-StringValue title = new StringValue("Результат проверки: )
+StringValue title = new StringValue("Результат проверки: ")
     .concat(new IntegerValue(count).greaterThan(treshold).asCondition(
-        new StringValue("%$1s определённо больше %$2s").format(count, treshold)
+        new StringValue("%$1s определённо больше %$2s").format(count, treshold),
         new StringValue("%$1s не больше %$2s").format(count, treshold)));
         
 // Результат проверки: 4 не больше 10
