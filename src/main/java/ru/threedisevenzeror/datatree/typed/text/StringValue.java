@@ -4,11 +4,15 @@ import ru.threedisevenzeror.datatree.base.ConstantValue;
 import ru.threedisevenzeror.datatree.base.Value;
 import ru.threedisevenzeror.datatree.base.ValueFunction;
 import ru.threedisevenzeror.datatree.typed.BooleanValue;
+import ru.threedisevenzeror.datatree.typed.ObjectValue;
 import ru.threedisevenzeror.datatree.typed.number.NumberValue;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Locale;
+import java.util.concurrent.Executor;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 
 /**
  * Created by ThreeDISevenZeroR on 05.10.2016.
@@ -114,6 +118,47 @@ public class StringValue extends TextValue<String> {
         return new BooleanValue(func);
     }
 
+    public StringValue format(Object... args) {
+        return format(Locale.getDefault(), args);
+    }
+
+    public StringValue format(Locale locale, Object... args) {
+        Value<?>[] valueArgs = new Value[args.length];
+
+        for(int i = 0; i < args.length; i++) {
+            valueArgs[i] = new ConstantValue<>(args[i]);
+        }
+
+        return format(new ConstantValue<>(locale), valueArgs);
+    }
+
+    public StringValue format(Value<?>... args) {
+        return format(new ConstantValue<>(Locale.getDefault()), args);
+    }
+
+    public StringValue format(Value<Locale> locale, Value<?>... args) {
+        ValueFunction<String, String> func = new ValueFunction<>(getWrappedValue(), s -> {
+            if (s != null) {
+                Object[] argObjects = new Object[args.length];
+
+                for(int i = 0; i < args.length; i++) {
+                    argObjects[i] = args[i].get();
+                }
+
+                return String.format(locale.get(), s, argObjects);
+            } else {
+                return null;
+            }
+        });
+
+        func.addDependentValue(locale);
+        for(Value<?> v : args) {
+            func.addDependentValue(v);
+        }
+
+        return new StringValue(func);
+    }
+
     public NumberValue<?> asNumber() {
         return new NumberValue<>(new ValueFunction<>(getWrappedValue(), (String v) -> {
             try {
@@ -124,5 +169,25 @@ public class StringValue extends TextValue<String> {
 
             return null;
         }));
+    }
+
+    @Override
+    public StringValue debounce(Value<? extends Executor> executor, Value<TimeUnit> timeUnit, Value<Long> time) {
+        return new StringValue(super.debounce(executor, timeUnit, time).getWrappedValue());
+    }
+
+    @Override
+    public StringValue debounce(Executor executor, TimeUnit timeUnit, long time) {
+        return new StringValue(super.debounce(executor, timeUnit, time).getWrappedValue());
+    }
+
+    @Override
+    public StringValue delay(Value<? extends Executor> executor, Value<TimeUnit> timeUnit, Value<Long> time) {
+        return new StringValue(super.delay(executor, timeUnit, time).getWrappedValue());
+    }
+
+    @Override
+    public StringValue delay(Executor executor, TimeUnit timeUnit, long time) {
+        return new StringValue(super.delay(executor, timeUnit, time).getWrappedValue());
     }
 }

@@ -16,7 +16,7 @@ public abstract class AbstractDependentValue<T, V> extends AbstractMutableValue<
 
     public AbstractDependentValue() {
         sharedListener = (prevValue, newValue) -> {
-            updateValue();
+            onDependantValueUpdated();
         };
     }
 
@@ -76,9 +76,12 @@ public abstract class AbstractDependentValue<T, V> extends AbstractMutableValue<
 
     protected abstract T getNewValue();
 
+    protected void onDependantValueUpdated() {
+        updateValue();
+    }
+
     protected void updateValue() {
         T newValue = getNewValue();
-
 
         if(!Objects.equals(currentValue, newValue)) {
             T oldValue = currentValue;
