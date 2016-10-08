@@ -9,8 +9,10 @@ public class ValueFunction<F, T> extends AbstractDependentValue<T, Object> {
 
     private Value<F> value;
     private Function<F, T> function;
+    private String name;
 
-    public ValueFunction(Value<F> value, Function<F, T> function) {
+    public ValueFunction(String name, Value<F> value, Function<F, T> function) {
+        this.name = name;
         this.value = value;
         this.function = function;
         addDependentValue(value);
@@ -29,5 +31,10 @@ public class ValueFunction<F, T> extends AbstractDependentValue<T, Object> {
     @Override
     protected T getNewValue() {
         return function.apply(value.get());
+    }
+
+    @Override
+    public String toString() {
+        return name + " -> " + super.toString();
     }
 }

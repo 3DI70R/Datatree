@@ -1,23 +1,25 @@
-package ru.threedisevenzeror.datatree.typed.text;
+package ru.threedisevenzeror.datatree.wrapper.text;
 
 import ru.threedisevenzeror.datatree.base.ConstantValue;
 import ru.threedisevenzeror.datatree.base.Value;
 import ru.threedisevenzeror.datatree.base.ValueFunction;
-import ru.threedisevenzeror.datatree.typed.BooleanValue;
-import ru.threedisevenzeror.datatree.typed.ObjectValue;
-import ru.threedisevenzeror.datatree.typed.number.NumberValue;
+import ru.threedisevenzeror.datatree.wrapper.bool.BooleanValue;
+import ru.threedisevenzeror.datatree.wrapper.number.NumberValue;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Locale;
 import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
 
 /**
  * Created by ThreeDISevenZeroR on 05.10.2016.
  */
 public class StringValue extends TextValue<String> {
+
+    public StringValue() {
+
+    }
 
     public StringValue(String value) {
         this(new ConstantValue<>(value));
@@ -37,7 +39,7 @@ public class StringValue extends TextValue<String> {
     }
 
     public BooleanValue contains(Value<? extends CharSequence> text) {
-        ValueFunction<String, Boolean> func = new ValueFunction<>(getWrappedValue(), s -> {
+        ValueFunction<String, Boolean> func = new ValueFunction<>("contains", getWrappedValue(), s -> {
             if(s != null) {
                 CharSequence textObject = text.get();
                 if(textObject != null) {
@@ -57,7 +59,7 @@ public class StringValue extends TextValue<String> {
     }
 
     public StringValue concat(Value<String> text) {
-        ValueFunction<String, String> func = new ValueFunction<>(getWrappedValue(), s -> {
+        ValueFunction<String, String> func = new ValueFunction<>("concat", getWrappedValue(), s -> {
             String otherValue = text.get();
             if(s != null) {
                 if(otherValue != null) {
@@ -74,11 +76,11 @@ public class StringValue extends TextValue<String> {
     }
 
     public StringValue trim() {
-        return new StringValue(new ValueFunction<>(getWrappedValue(), v -> v != null ? v.trim() : null));
+        return new StringValue(new ValueFunction<>("trim", getWrappedValue(), v -> v != null ? v.trim() : null));
     }
 
     public StringValue toLowerCase() {
-        return new StringValue(new ValueFunction<>(getWrappedValue(), v -> v != null ? v.toLowerCase() : null));
+        return toLowerCase(Locale.getDefault());
     }
 
     public StringValue toLowerCase(Locale locale) {
@@ -86,14 +88,14 @@ public class StringValue extends TextValue<String> {
     }
 
     public StringValue toLowerCase(Value<Locale> locale) {
-        ValueFunction<String, String> func = new ValueFunction<>(getWrappedValue(),
+        ValueFunction<String, String> func = new ValueFunction<>("toLowerCase", getWrappedValue(),
                 s -> s != null ? s.toLowerCase(locale.get()) : null);
         func.addDependentValue(locale);
         return new StringValue(func);
     }
 
     public StringValue toUpperCase() {
-        return new StringValue(new ValueFunction<>(getWrappedValue(), v -> v != null ? v.toUpperCase() : null));
+        return toUpperCase(Locale.getDefault());
     }
 
     public StringValue toUpperCase(Locale locale) {
@@ -101,7 +103,7 @@ public class StringValue extends TextValue<String> {
     }
 
     public StringValue toUpperCase(Value<Locale> locale) {
-        ValueFunction<String, String> func = new ValueFunction<>(getWrappedValue(),
+        ValueFunction<String, String> func = new ValueFunction<>("toUpperCase", getWrappedValue(),
                 s -> s != null ? s.toUpperCase(locale.get()) : null);
         func.addDependentValue(locale);
         return new StringValue(func);
@@ -112,7 +114,7 @@ public class StringValue extends TextValue<String> {
     }
 
     public BooleanValue equalsIgnoreCase(Value<String> value) {
-        ValueFunction<String, Boolean> func = new ValueFunction<>(getWrappedValue(),
+        ValueFunction<String, Boolean> func = new ValueFunction<>("equalsIgnoreCase", getWrappedValue(),
                 s -> s != null ? s.equalsIgnoreCase(value.get()) : null);
         func.addDependentValue(value);
         return new BooleanValue(func);
@@ -137,7 +139,7 @@ public class StringValue extends TextValue<String> {
     }
 
     public StringValue format(Value<Locale> locale, Value<?>... args) {
-        ValueFunction<String, String> func = new ValueFunction<>(getWrappedValue(), s -> {
+        ValueFunction<String, String> func = new ValueFunction<>("format", getWrappedValue(), s -> {
             if (s != null) {
                 Object[] argObjects = new Object[args.length];
 
@@ -160,7 +162,7 @@ public class StringValue extends TextValue<String> {
     }
 
     public NumberValue<?> asNumber() {
-        return new NumberValue<>(new ValueFunction<>(getWrappedValue(), (String v) -> {
+        return new NumberValue<>(new ValueFunction<>("asNumber", getWrappedValue(), (String v) -> {
             try {
                 return NumberFormat.getNumberInstance().parse(v);
             } catch (ParseException e) {

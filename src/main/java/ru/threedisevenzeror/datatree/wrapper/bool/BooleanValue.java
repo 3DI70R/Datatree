@@ -1,20 +1,23 @@
-package ru.threedisevenzeror.datatree.typed;
+package ru.threedisevenzeror.datatree.wrapper.bool;
 
-import com.sun.javafx.fxml.expression.ExpressionValue;
-import ru.threedisevenzeror.datatree.base.AbstractDependentValue;
 import ru.threedisevenzeror.datatree.base.ConstantValue;
 import ru.threedisevenzeror.datatree.base.Value;
 import ru.threedisevenzeror.datatree.base.ValueFunction;
-import ru.threedisevenzeror.datatree.typed.number.NumberValue;
+import ru.threedisevenzeror.datatree.wrapper.ObjectValue;
+import ru.threedisevenzeror.datatree.wrapper.number.IntegerValue;
+import ru.threedisevenzeror.datatree.wrapper.number.NumberValue;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
 
 /**
  * Created by ThreeDISevenZeroR on 05.10.2016.
  */
 public class BooleanValue extends ObjectValue<Boolean> {
+
+    public BooleanValue() {
+
+    }
 
     public BooleanValue(Boolean value) {
         this(new ConstantValue<>(value));
@@ -24,12 +27,20 @@ public class BooleanValue extends ObjectValue<Boolean> {
         super(value);
     }
 
-    public BooleanValue not() {
-        return new BooleanValue(new ValueFunction<>(getWrappedValue(), b -> b != null ? !b : null));
+    public BooleanValue and(Value<Boolean> value) {
+        return new AndBooleanValue(getWrappedValue(), value);
     }
 
-    public NumberValue<?> asNumber() {
-        return new NumberValue<>(new ValueFunction<>(getWrappedValue(), b -> b != null ? (b ? 1 : 0) : null));
+    public BooleanValue or(Value<Boolean> value) {
+        return new OrBooleanValue(getWrappedValue(), value);
+    }
+
+    public BooleanValue not() {
+        return new BooleanValue(new ValueFunction<>("not", getWrappedValue(), b -> b != null ? !b : null));
+    }
+
+    public IntegerValue asNumber() {
+        return new IntegerValue(new ValueFunction<>("asNumber", getWrappedValue(), b -> b != null ? (b ? 1 : 0) : null));
     }
 
     @Override
@@ -60,7 +71,7 @@ public class BooleanValue extends ObjectValue<Boolean> {
     public <T> ObjectValue<T> asCondition(T trueValue,
                                           T falseValue,
                                           T nullValue) {
-        return new ObjectValue<>(new ValueFunction<>(getWrappedValue(), b -> {
+        return new ObjectValue<>(new ValueFunction<>("asCondition", getWrappedValue(), b -> {
             if(b != null) {
                 return b ? trueValue : falseValue;
             } else {
@@ -77,7 +88,7 @@ public class BooleanValue extends ObjectValue<Boolean> {
     public <T> ObjectValue<T> asCondition(Value<? extends T> trueValue,
                                     Value<? extends T> falseValue,
                                     Value<? extends T> nullValue) {
-        ValueFunction<Boolean, T> value = new ValueFunction<>(getWrappedValue(), b -> {
+        ValueFunction<Boolean, T> value = new ValueFunction<>("asCondition", getWrappedValue(), b -> {
             if(b != null) {
                 return b ? trueValue.get() : falseValue.get();
             } else {

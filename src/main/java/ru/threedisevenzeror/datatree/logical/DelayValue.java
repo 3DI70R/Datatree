@@ -37,7 +37,7 @@ public class DelayValue<T> extends AbstractDependentValue<T, T> {
     }
 
     @Override
-    protected void onDependantValueUpdated() {
+    protected void onDependentValueUpdated() {
         T newValue = value.get();
         delayExecutor.schedule((Runnable) () -> {
             callbackExecutor.get().execute(() -> {

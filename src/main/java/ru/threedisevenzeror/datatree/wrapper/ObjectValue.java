@@ -1,4 +1,4 @@
-package ru.threedisevenzeror.datatree.typed;
+package ru.threedisevenzeror.datatree.wrapper;
 
 import ru.threedisevenzeror.datatree.base.AbstractValueWrapper;
 import ru.threedisevenzeror.datatree.base.ConstantValue;
@@ -6,7 +6,8 @@ import ru.threedisevenzeror.datatree.base.Value;
 import ru.threedisevenzeror.datatree.base.ValueFunction;
 import ru.threedisevenzeror.datatree.logical.DebounceValue;
 import ru.threedisevenzeror.datatree.logical.DelayValue;
-import ru.threedisevenzeror.datatree.typed.text.StringValue;
+import ru.threedisevenzeror.datatree.wrapper.bool.BooleanValue;
+import ru.threedisevenzeror.datatree.wrapper.text.StringValue;
 
 import java.util.Objects;
 import java.util.concurrent.Executor;
@@ -17,6 +18,10 @@ import java.util.concurrent.TimeUnit;
  */
 public class ObjectValue<T> extends AbstractValueWrapper<T> {
 
+    public ObjectValue() {
+
+    }
+
     public ObjectValue(T value) {
         super(new ConstantValue<>(value));
     }
@@ -26,15 +31,18 @@ public class ObjectValue<T> extends AbstractValueWrapper<T> {
     }
 
     public StringValue asString() {
-        return new StringValue(new ValueFunction<>(getWrappedValue(), v -> v != null ? v.toString() : null));
+        return new StringValue(new ValueFunction<>("asString", getWrappedValue(),
+                v -> v != null ? v.toString() : null));
     }
 
     public BooleanValue notEquals(Value<?> obj) {
-        return new BooleanValue(new ValueFunction<>(obj, f -> !Objects.equals(f, get())));
+        return equals(obj).not();
     }
 
     public BooleanValue equals(Value<?> obj) {
-        return new BooleanValue(new ValueFunction<>(obj, f -> Objects.equals(f, get())));
+        ValueFunction<?, Boolean> function = new ValueFunction<>("equals", getWrappedValue(), f -> Objects.equals(f, obj.get()));
+        function.addDependentValue(obj);
+        return new BooleanValue(function);
     }
 
     public ObjectValue<T> debounce(Value<? extends Executor> executor, Value<TimeUnit> timeUnit, Value<Long> time) {

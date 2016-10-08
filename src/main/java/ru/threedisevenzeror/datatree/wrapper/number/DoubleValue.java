@@ -1,4 +1,4 @@
-package ru.threedisevenzeror.datatree.typed.number;
+package ru.threedisevenzeror.datatree.wrapper.number;
 
 import ru.threedisevenzeror.datatree.base.Value;
 
@@ -9,6 +9,14 @@ import java.util.concurrent.TimeUnit;
  * Created by ThreeDISevenZeroR on 05.10.2016.
  */
 public class DoubleValue extends NumberValue<Double> {
+
+    public DoubleValue() {
+
+    }
+
+    public DoubleValue(Double value) {
+        super(value);
+    }
 
     public DoubleValue(Value<Double> value) {
         super(value);

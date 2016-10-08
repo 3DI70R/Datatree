@@ -37,7 +37,7 @@ public class DebounceValue<T> extends AbstractDependentValue<T, T> {
     }
 
     @Override
-    protected void onDependantValueUpdated() {
+    protected void onDependentValueUpdated() {
 
         if(updateTask != null) {
             updateTask.cancel(false);

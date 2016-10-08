@@ -1,51 +1,64 @@
-package ru.threedisevenzeror.datatree.typed.number;
+package ru.threedisevenzeror.datatree.wrapper.number;
 
 import ru.threedisevenzeror.datatree.base.Value;
 import ru.threedisevenzeror.datatree.base.ValueFunction;
-import ru.threedisevenzeror.datatree.typed.BooleanValue;
-import ru.threedisevenzeror.datatree.typed.ObjectValue;
+import ru.threedisevenzeror.datatree.wrapper.bool.BooleanValue;
+import ru.threedisevenzeror.datatree.wrapper.ObjectValue;
 
 import java.math.BigDecimal;
 import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
 
 /**
  * Created by ThreeDISevenZeroR on 05.10.2016.
  */
 public class NumberValue<T extends Number> extends ObjectValue<T> {
 
+    public NumberValue() {
+
+    }
+
+    public NumberValue(T value) {
+        super(value);
+    }
+
     public NumberValue(Value<T> value) {
         super(value);
     }
 
     public ByteValue asByte() {
-        return new ByteValue(new ValueFunction<>(getWrappedValue(), v -> v != null ? v.byteValue() : null));
+        return new ByteValue(new ValueFunction<>("asByte", getWrappedValue(),
+                v -> v != null ? v.byteValue() : null));
     }
 
     public ShortValue asShort() {
-        return new ShortValue(new ValueFunction<>(getWrappedValue(), v -> v != null ? v.shortValue() : null));
+        return new ShortValue(new ValueFunction<>("asShort", getWrappedValue(),
+                v -> v != null ? v.shortValue() : null));
     }
 
     public IntegerValue asInteger() {
-        return new IntegerValue(new ValueFunction<>(getWrappedValue(), v -> v != null ? v.intValue() : null));
+        return new IntegerValue(new ValueFunction<>("asInteger", getWrappedValue(),
+                v -> v != null ? v.intValue() : null));
     }
 
     public LongValue asLong() {
-        return new LongValue(new ValueFunction<>(getWrappedValue(), v -> v != null ? v.longValue() : null));
+        return new LongValue(new ValueFunction<>("asLong", getWrappedValue(),
+                v -> v != null ? v.longValue() : null));
     }
 
     public FloatValue asFloat() {
-        return new FloatValue(new ValueFunction<>(getWrappedValue(), v -> v != null ? v.floatValue() : null));
+        return new FloatValue(new ValueFunction<>("asFloat", getWrappedValue(),
+                v -> v != null ? v.floatValue() : null));
     }
 
     public DoubleValue asDouble() {
-        return new DoubleValue(new ValueFunction<>(getWrappedValue(), v -> v != null ? v.doubleValue() : null));
+        return new DoubleValue(new ValueFunction<>("asDouble", getWrappedValue(),
+                v -> v != null ? v.doubleValue() : null));
     }
 
     public IntegerValue compareTo(Value<? extends Number> otherValue) {
 
-        return new IntegerValue(new ValueFunction<>(getWrappedValue(), v -> {
+        ValueFunction<? extends Number, Integer> func = new ValueFunction<>("compareTo", getWrappedValue(), v -> {
             Number otherNumber = otherValue.get();
             if(v != null) {
                 if(otherNumber != null) {
@@ -77,23 +90,38 @@ public class NumberValue<T extends Number> extends ObjectValue<T> {
                     return 0;
                 }
             }
-        }));
+        });
+        func.addDependentValue(otherValue);
+
+        return new IntegerValue(func);
     }
 
     public BooleanValue greaterThan(Value<? extends Number> otherValue) {
-        return new BooleanValue(new ValueFunction<>(compareTo(otherValue).getWrappedValue(), v -> v > 0));
+        ValueFunction<Integer, Boolean> func = new ValueFunction<>("greaterThan",
+                compareTo(otherValue).getWrappedValue(), v -> v > 0);
+        func.addDependentValue(otherValue);
+        return new BooleanValue(func);
     }
 
     public BooleanValue greaterThanOrEquals(Value<? extends Number> otherValue) {
-        return new BooleanValue(new ValueFunction<>(compareTo(otherValue).getWrappedValue(), v -> v >= 0));
+        ValueFunction<Integer, Boolean> func = new ValueFunction<>("greaterThanOrEquals",
+                compareTo(otherValue).getWrappedValue(), v -> v >= 0);
+        func.addDependentValue(otherValue);
+        return new BooleanValue(func);
     }
 
     public BooleanValue lessThan(Value<? extends Number> otherValue) {
-        return new BooleanValue(new ValueFunction<>(compareTo(otherValue).getWrappedValue(), v -> v < 0));
+        ValueFunction<Integer, Boolean> func = new ValueFunction<>("lessThan",
+                compareTo(otherValue).getWrappedValue(), v -> v < 0);
+        func.addDependentValue(otherValue);
+        return new BooleanValue(func);
     }
 
     public BooleanValue lessThanOrEquals(Value<? extends Number> otherValue) {
-        return new BooleanValue(new ValueFunction<>(compareTo(otherValue).getWrappedValue(), v -> v <= 0));
+        ValueFunction<Integer, Boolean> func = new ValueFunction<>("lessThanOrEquals",
+                compareTo(otherValue).getWrappedValue(), v -> v <= 0);
+        func.addDependentValue(otherValue);
+        return new BooleanValue(func);
     }
 
     @Override

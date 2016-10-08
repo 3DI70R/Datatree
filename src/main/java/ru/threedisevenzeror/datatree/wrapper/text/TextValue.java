@@ -1,9 +1,10 @@
-package ru.threedisevenzeror.datatree.typed.text;
+package ru.threedisevenzeror.datatree.wrapper.text;
 
+import ru.threedisevenzeror.datatree.base.ConstantValue;
 import ru.threedisevenzeror.datatree.base.Value;
 import ru.threedisevenzeror.datatree.base.ValueFunction;
-import ru.threedisevenzeror.datatree.typed.ObjectValue;
-import ru.threedisevenzeror.datatree.typed.number.IntegerValue;
+import ru.threedisevenzeror.datatree.wrapper.ObjectValue;
+import ru.threedisevenzeror.datatree.wrapper.number.IntegerValue;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
@@ -13,12 +14,20 @@ import java.util.concurrent.TimeUnit;
  */
 public class TextValue<T extends CharSequence> extends ObjectValue<T> {
 
+    public TextValue() {
+
+    }
+
+    public TextValue(T value) {
+        this(new ConstantValue<>(value));
+    }
+
     public TextValue(Value<T> value) {
         super(value);
     }
 
     public IntegerValue length() {
-        return new IntegerValue(new ValueFunction<>(getWrappedValue(), v -> v != null ? v.length() : 0));
+        return new IntegerValue(new ValueFunction<>("length", getWrappedValue(), v -> v != null ? v.length() : 0));
     }
 
     @Override

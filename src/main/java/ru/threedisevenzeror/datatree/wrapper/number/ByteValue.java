@@ -1,7 +1,6 @@
-package ru.threedisevenzeror.datatree.typed.number;
+package ru.threedisevenzeror.datatree.wrapper.number;
 
 import ru.threedisevenzeror.datatree.base.Value;
-import ru.threedisevenzeror.datatree.typed.ObjectValue;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
@@ -11,6 +10,14 @@ import java.util.concurrent.TimeUnit;
  */
 public class ByteValue extends NumberValue<Byte> {
 
+    public ByteValue() {
+
+    }
+
+    public ByteValue(Byte value) {
+        super(value);
+    }
+
     public ByteValue(Value<Byte> value) {
         super(value);
     }
@@ -19,7 +26,6 @@ public class ByteValue extends NumberValue<Byte> {
     public ByteValue asByte() {
         return this;
     }
-
 
     @Override
     public ByteValue debounce(Value<? extends Executor> executor, Value<TimeUnit> timeUnit, Value<Long> time) {
