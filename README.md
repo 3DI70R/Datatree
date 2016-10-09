@@ -34,7 +34,7 @@ Value<String> text = (countInt.lessThan(names.count())).and(countInt.greaterThan
         .debounce(TimeUnit.MILLISECONDS, 250);
 ```
 
-При изменении count, изменится и значение лежащее в title.
+При изменении count, изменится и значение лежащее в title. Если countString не удалось преобразовать в число, вместо него будет 0.
 Если на title кто то повесил onValueChangedListener, изменение любого связанного объекта уведомит onValueChangedListener новым значением
 Бонусом, debounce запретит обновление text'а если count меняется слишком часто, значение обновится только когда с момента последнего изменения пройдёт 250 мсек
 
