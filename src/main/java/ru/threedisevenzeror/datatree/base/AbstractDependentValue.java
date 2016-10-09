@@ -8,7 +8,6 @@ import java.util.Objects;
 /**
  * Created by ThreeDISevenZeroR on 05.10.2016.
  */
-// TODO: Найти баг с кэшированием значения
 public abstract class AbstractDependentValue<T, V> extends AbstractMutableValue<T> {
 
     private List<Value<? extends V>> values;
@@ -16,6 +15,7 @@ public abstract class AbstractDependentValue<T, V> extends AbstractMutableValue<
     private T currentValue;
 
     public AbstractDependentValue() {
+        values = new ArrayList<>(2);
         sharedListener = (prevValue, newValue) -> {
             onDependentValueUpdated();
         };
@@ -26,9 +26,9 @@ public abstract class AbstractDependentValue<T, V> extends AbstractMutableValue<
             values = new ArrayList<>();
         }
 
-        //if(hasAttachedListeners()) {
+        if(hasAttachedListeners()) {
             value.addOnValueChangedListener(sharedListener);
-        //}
+        }
 
         values.add(value);
         updateValue();
@@ -45,30 +45,32 @@ public abstract class AbstractDependentValue<T, V> extends AbstractMutableValue<
 
     @Override
     public void addOnValueChangedListener(OnValueChangedListener<T> listener) {
-        //boolean shouldRegister = !hasAttachedListeners();
+        boolean shouldRegister = !hasAttachedListeners();
         super.addOnValueChangedListener(listener);
-
-        /*if(shouldRegister && values != null) {
+        if(shouldRegister) {
             for(Value<? extends V> value : values) {
                 value.addOnValueChangedListener(sharedListener);
             }
-        }*/
+        }
     }
 
     @Override
     public void removeOnValueChangedListener(OnValueChangedListener<T> listener) {
         super.removeOnValueChangedListener(listener);
-
-        /*if(!hasAttachedListeners() && values != null) {
+        if(!hasAttachedListeners()) {
             for(Value<? extends V> value : values) {
                 value.removeOnValueChangedListener(sharedListener);
             }
-        }*/
+        }
     }
 
     @Override
     public T get() {
-        return getNewValue();
+        if(hasAttachedListeners()) {
+            return currentValue;
+        } else {
+            return getNewValue();
+        }
     }
 
     protected abstract T getNewValue();

@@ -1,4 +1,7 @@
-package ru.threedisevenzeror.datatree.base;
+package ru.threedisevenzeror.datatree.base.functional;
+
+import ru.threedisevenzeror.datatree.base.OnValueChangedListener;
+import ru.threedisevenzeror.datatree.base.Value;
 
 import java.util.function.Supplier;
 

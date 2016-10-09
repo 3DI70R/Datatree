@@ -28,8 +28,18 @@ public class LongValue extends NumberValue<Long> {
     }
 
     @Override
+    public LongValue debounce(Value<TimeUnit> timeUnit, Value<Long> time) {
+        return new LongValue(super.debounce(timeUnit, time).getWrappedValue());
+    }
+
+    @Override
     public LongValue debounce(Value<? extends Executor> executor, Value<TimeUnit> timeUnit, Value<Long> time) {
         return new LongValue(super.debounce(executor, timeUnit, time).getWrappedValue());
+    }
+
+    @Override
+    public LongValue debounce(TimeUnit timeUnit, long time) {
+        return new LongValue(super.debounce(timeUnit, time).getWrappedValue());
     }
 
     @Override
@@ -38,8 +48,18 @@ public class LongValue extends NumberValue<Long> {
     }
 
     @Override
+    public LongValue delay(Value<TimeUnit> timeUnit, Value<Long> time) {
+        return new LongValue(super.delay(timeUnit, time).getWrappedValue());
+    }
+
+    @Override
     public LongValue delay(Value<? extends Executor> executor, Value<TimeUnit> timeUnit, Value<Long> time) {
         return new LongValue(super.delay(executor, timeUnit, time).getWrappedValue());
+    }
+
+    @Override
+    public LongValue delay(TimeUnit timeUnit, long time) {
+        return new LongValue(super.delay(timeUnit, time).getWrappedValue());
     }
 
     @Override

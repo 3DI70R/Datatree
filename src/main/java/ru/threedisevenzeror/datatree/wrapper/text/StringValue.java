@@ -2,7 +2,7 @@ package ru.threedisevenzeror.datatree.wrapper.text;
 
 import ru.threedisevenzeror.datatree.base.ConstantValue;
 import ru.threedisevenzeror.datatree.base.Value;
-import ru.threedisevenzeror.datatree.base.ValueFunction;
+import ru.threedisevenzeror.datatree.base.functional.ValueFunction;
 import ru.threedisevenzeror.datatree.wrapper.bool.BooleanValue;
 import ru.threedisevenzeror.datatree.wrapper.number.NumberValue;
 
@@ -174,8 +174,18 @@ public class StringValue extends TextValue<String> {
     }
 
     @Override
+    public StringValue debounce(Value<TimeUnit> timeUnit, Value<Long> time) {
+        return new StringValue(super.debounce(timeUnit, time).getWrappedValue());
+    }
+
+    @Override
     public StringValue debounce(Value<? extends Executor> executor, Value<TimeUnit> timeUnit, Value<Long> time) {
         return new StringValue(super.debounce(executor, timeUnit, time).getWrappedValue());
+    }
+
+    @Override
+    public StringValue debounce(TimeUnit timeUnit, long time) {
+        return new StringValue(super.debounce(timeUnit, time).getWrappedValue());
     }
 
     @Override
@@ -184,8 +194,18 @@ public class StringValue extends TextValue<String> {
     }
 
     @Override
+    public StringValue delay(Value<TimeUnit> timeUnit, Value<Long> time) {
+        return new StringValue(super.delay(timeUnit, time).getWrappedValue());
+    }
+
+    @Override
     public StringValue delay(Value<? extends Executor> executor, Value<TimeUnit> timeUnit, Value<Long> time) {
         return new StringValue(super.delay(executor, timeUnit, time).getWrappedValue());
+    }
+
+    @Override
+    public StringValue delay(TimeUnit timeUnit, long time) {
+        return new StringValue(super.delay(timeUnit, time).getWrappedValue());
     }
 
     @Override

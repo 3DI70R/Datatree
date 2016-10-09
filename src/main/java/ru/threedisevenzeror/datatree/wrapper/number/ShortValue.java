@@ -28,8 +28,18 @@ public class ShortValue extends NumberValue<Short> {
     }
 
     @Override
+    public ShortValue debounce(Value<TimeUnit> timeUnit, Value<Long> time) {
+        return new ShortValue(super.debounce(timeUnit, time).getWrappedValue());
+    }
+
+    @Override
     public ShortValue debounce(Value<? extends Executor> executor, Value<TimeUnit> timeUnit, Value<Long> time) {
         return new ShortValue(super.debounce(executor, timeUnit, time).getWrappedValue());
+    }
+
+    @Override
+    public ShortValue debounce(TimeUnit timeUnit, long time) {
+        return new ShortValue(super.debounce(timeUnit, time).getWrappedValue());
     }
 
     @Override
@@ -38,8 +48,18 @@ public class ShortValue extends NumberValue<Short> {
     }
 
     @Override
+    public ShortValue delay(Value<TimeUnit> timeUnit, Value<Long> time) {
+        return new ShortValue(super.delay(timeUnit, time).getWrappedValue());
+    }
+
+    @Override
     public ShortValue delay(Value<? extends Executor> executor, Value<TimeUnit> timeUnit, Value<Long> time) {
         return new ShortValue(super.delay(executor, timeUnit, time).getWrappedValue());
+    }
+
+    @Override
+    public ShortValue delay(TimeUnit timeUnit, long time) {
+        return new ShortValue(super.delay(timeUnit, time).getWrappedValue());
     }
 
     @Override

@@ -2,10 +2,9 @@ package ru.threedisevenzeror.datatree.wrapper.bool;
 
 import ru.threedisevenzeror.datatree.base.ConstantValue;
 import ru.threedisevenzeror.datatree.base.Value;
-import ru.threedisevenzeror.datatree.base.ValueFunction;
+import ru.threedisevenzeror.datatree.base.functional.ValueFunction;
 import ru.threedisevenzeror.datatree.wrapper.ObjectValue;
 import ru.threedisevenzeror.datatree.wrapper.number.IntegerValue;
-import ru.threedisevenzeror.datatree.wrapper.number.NumberValue;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
@@ -41,26 +40,6 @@ public class BooleanValue extends ObjectValue<Boolean> {
 
     public IntegerValue asNumber() {
         return new IntegerValue(new ValueFunction<>("asNumber", getWrappedValue(), b -> b != null ? (b ? 1 : 0) : null));
-    }
-
-    @Override
-    public BooleanValue debounce(Value<? extends Executor> executor, Value<TimeUnit> timeUnit, Value<Long> time) {
-        return new BooleanValue(super.debounce(executor, timeUnit, time).getWrappedValue());
-    }
-
-    @Override
-    public BooleanValue debounce(Executor executor, TimeUnit timeUnit, long time) {
-        return new BooleanValue(super.debounce(executor, timeUnit, time).getWrappedValue());
-    }
-
-    @Override
-    public BooleanValue delay(Value<? extends Executor> executor, Value<TimeUnit> timeUnit, Value<Long> time) {
-        return new BooleanValue(super.delay(executor, timeUnit, time).getWrappedValue());
-    }
-
-    @Override
-    public BooleanValue delay(Executor executor, TimeUnit timeUnit, long time) {
-        return new BooleanValue(super.delay(executor, timeUnit, time).getWrappedValue());
     }
 
     public <T> ObjectValue<T> asCondition(T trueValue,
@@ -100,5 +79,45 @@ public class BooleanValue extends ObjectValue<Boolean> {
         value.addDependentValue(nullValue);
 
         return new ObjectValue<>(value);
+    }
+
+    @Override
+    public BooleanValue debounce(Value<TimeUnit> timeUnit, Value<Long> time) {
+        return new BooleanValue(super.debounce(timeUnit, time).getWrappedValue());
+    }
+
+    @Override
+    public BooleanValue debounce(Value<? extends Executor> executor, Value<TimeUnit> timeUnit, Value<Long> time) {
+        return new BooleanValue(super.debounce(executor, timeUnit, time).getWrappedValue());
+    }
+
+    @Override
+    public BooleanValue debounce(TimeUnit timeUnit, long time) {
+        return new BooleanValue(super.debounce(timeUnit, time).getWrappedValue());
+    }
+
+    @Override
+    public BooleanValue debounce(Executor executor, TimeUnit timeUnit, long time) {
+        return new BooleanValue(super.debounce(executor, timeUnit, time).getWrappedValue());
+    }
+
+    @Override
+    public BooleanValue delay(Value<TimeUnit> timeUnit, Value<Long> time) {
+        return new BooleanValue(super.delay(timeUnit, time).getWrappedValue());
+    }
+
+    @Override
+    public BooleanValue delay(Value<? extends Executor> executor, Value<TimeUnit> timeUnit, Value<Long> time) {
+        return new BooleanValue(super.delay(executor, timeUnit, time).getWrappedValue());
+    }
+
+    @Override
+    public BooleanValue delay(TimeUnit timeUnit, long time) {
+        return new BooleanValue(super.delay(timeUnit, time).getWrappedValue());
+    }
+
+    @Override
+    public BooleanValue delay(Executor executor, TimeUnit timeUnit, long time) {
+        return new BooleanValue(super.delay(executor, timeUnit, time).getWrappedValue());
     }
 }

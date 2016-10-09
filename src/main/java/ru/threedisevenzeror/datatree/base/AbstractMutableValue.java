@@ -31,8 +31,9 @@ public abstract class AbstractMutableValue<T> extends AbstractValue<T> {
     protected void notifyListeners(T prevValue, T nextValue) {
         if(listeners != null) {
             // TODO: Защита от отписки во время вызова
-            for(OnValueChangedListener<T> listener : listeners) {
-                listener.onValueChanged(prevValue, nextValue);
+
+            for(int i = listeners.size() - 1; i >= 0; i--) {
+                listeners.get(i).onValueChanged(prevValue, nextValue);
             }
         }
     }

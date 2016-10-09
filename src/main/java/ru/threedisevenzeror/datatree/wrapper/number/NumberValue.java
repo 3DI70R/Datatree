@@ -1,7 +1,7 @@
 package ru.threedisevenzeror.datatree.wrapper.number;
 
 import ru.threedisevenzeror.datatree.base.Value;
-import ru.threedisevenzeror.datatree.base.ValueFunction;
+import ru.threedisevenzeror.datatree.base.functional.ValueFunction;
 import ru.threedisevenzeror.datatree.wrapper.bool.BooleanValue;
 import ru.threedisevenzeror.datatree.wrapper.ObjectValue;
 
@@ -125,8 +125,18 @@ public class NumberValue<T extends Number> extends ObjectValue<T> {
     }
 
     @Override
+    public NumberValue<T> debounce(Value<TimeUnit> timeUnit, Value<Long> time) {
+        return new NumberValue<>(super.debounce(timeUnit, time).getWrappedValue());
+    }
+
+    @Override
     public NumberValue<T> debounce(Value<? extends Executor> executor, Value<TimeUnit> timeUnit, Value<Long> time) {
         return new NumberValue<>(super.debounce(executor, timeUnit, time).getWrappedValue());
+    }
+
+    @Override
+    public NumberValue<T> debounce(TimeUnit timeUnit, long time) {
+        return new NumberValue<>(super.debounce(timeUnit, time).getWrappedValue());
     }
 
     @Override
@@ -135,8 +145,18 @@ public class NumberValue<T extends Number> extends ObjectValue<T> {
     }
 
     @Override
+    public NumberValue<T> delay(Value<TimeUnit> timeUnit, Value<Long> time) {
+        return new NumberValue<>(super.delay(timeUnit, time).getWrappedValue());
+    }
+
+    @Override
     public NumberValue<T> delay(Value<? extends Executor> executor, Value<TimeUnit> timeUnit, Value<Long> time) {
         return new NumberValue<>(super.delay(executor, timeUnit, time).getWrappedValue());
+    }
+
+    @Override
+    public NumberValue<T> delay(TimeUnit timeUnit, long time) {
+        return new NumberValue<>(super.delay(timeUnit, time).getWrappedValue());
     }
 
     @Override

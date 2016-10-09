@@ -1,7 +1,7 @@
 package ru.threedisevenzeror.datatree.wrapper.bool;
 
 import ru.threedisevenzeror.datatree.base.Value;
-import ru.threedisevenzeror.datatree.base.ValueSupplier;
+import ru.threedisevenzeror.datatree.base.functional.ValueSupplier;
 
 import java.util.List;
 

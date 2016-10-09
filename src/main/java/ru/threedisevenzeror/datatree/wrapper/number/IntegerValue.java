@@ -28,8 +28,18 @@ public class IntegerValue extends NumberValue<Integer> {
     }
 
     @Override
+    public IntegerValue debounce(Value<TimeUnit> timeUnit, Value<Long> time) {
+        return new IntegerValue(super.debounce(timeUnit, time).getWrappedValue());
+    }
+
+    @Override
     public IntegerValue debounce(Value<? extends Executor> executor, Value<TimeUnit> timeUnit, Value<Long> time) {
         return new IntegerValue(super.debounce(executor, timeUnit, time).getWrappedValue());
+    }
+
+    @Override
+    public IntegerValue debounce(TimeUnit timeUnit, long time) {
+        return new IntegerValue(super.debounce(timeUnit, time).getWrappedValue());
     }
 
     @Override
@@ -38,8 +48,18 @@ public class IntegerValue extends NumberValue<Integer> {
     }
 
     @Override
+    public IntegerValue delay(Value<TimeUnit> timeUnit, Value<Long> time) {
+        return new IntegerValue(super.delay(timeUnit, time).getWrappedValue());
+    }
+
+    @Override
     public IntegerValue delay(Value<? extends Executor> executor, Value<TimeUnit> timeUnit, Value<Long> time) {
         return new IntegerValue(super.delay(executor, timeUnit, time).getWrappedValue());
+    }
+
+    @Override
+    public IntegerValue delay(TimeUnit timeUnit, long time) {
+        return new IntegerValue(super.delay(timeUnit, time).getWrappedValue());
     }
 
     @Override

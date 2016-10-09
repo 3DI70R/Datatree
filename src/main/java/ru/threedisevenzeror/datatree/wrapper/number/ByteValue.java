@@ -28,8 +28,18 @@ public class ByteValue extends NumberValue<Byte> {
     }
 
     @Override
+    public ByteValue debounce(Value<TimeUnit> timeUnit, Value<Long> time) {
+        return new ByteValue(super.debounce(timeUnit, time).getWrappedValue());
+    }
+
+    @Override
     public ByteValue debounce(Value<? extends Executor> executor, Value<TimeUnit> timeUnit, Value<Long> time) {
         return new ByteValue(super.debounce(executor, timeUnit, time).getWrappedValue());
+    }
+
+    @Override
+    public ByteValue debounce(TimeUnit timeUnit, long time) {
+        return new ByteValue(super.debounce(timeUnit, time).getWrappedValue());
     }
 
     @Override
@@ -38,8 +48,18 @@ public class ByteValue extends NumberValue<Byte> {
     }
 
     @Override
+    public ByteValue delay(Value<TimeUnit> timeUnit, Value<Long> time) {
+        return new ByteValue(super.delay(timeUnit, time).getWrappedValue());
+    }
+
+    @Override
     public ByteValue delay(Value<? extends Executor> executor, Value<TimeUnit> timeUnit, Value<Long> time) {
         return new ByteValue(super.delay(executor, timeUnit, time).getWrappedValue());
+    }
+
+    @Override
+    public ByteValue delay(TimeUnit timeUnit, long time) {
+        return new ByteValue(super.delay(timeUnit, time).getWrappedValue());
     }
 
     @Override

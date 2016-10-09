@@ -28,8 +28,18 @@ public class FloatValue extends NumberValue<Float> {
     }
 
     @Override
+    public FloatValue debounce(Value<TimeUnit> timeUnit, Value<Long> time) {
+        return new FloatValue(super.debounce(timeUnit, time).getWrappedValue());
+    }
+
+    @Override
     public FloatValue debounce(Value<? extends Executor> executor, Value<TimeUnit> timeUnit, Value<Long> time) {
         return new FloatValue(super.debounce(executor, timeUnit, time).getWrappedValue());
+    }
+
+    @Override
+    public FloatValue debounce(TimeUnit timeUnit, long time) {
+        return new FloatValue(super.debounce(timeUnit, time).getWrappedValue());
     }
 
     @Override
@@ -38,8 +48,18 @@ public class FloatValue extends NumberValue<Float> {
     }
 
     @Override
+    public FloatValue delay(Value<TimeUnit> timeUnit, Value<Long> time) {
+        return new FloatValue(super.delay(timeUnit, time).getWrappedValue());
+    }
+
+    @Override
     public FloatValue delay(Value<? extends Executor> executor, Value<TimeUnit> timeUnit, Value<Long> time) {
         return new FloatValue(super.delay(executor, timeUnit, time).getWrappedValue());
+    }
+
+    @Override
+    public FloatValue delay(TimeUnit timeUnit, long time) {
+        return new FloatValue(super.delay(timeUnit, time).getWrappedValue());
     }
 
     @Override
