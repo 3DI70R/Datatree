@@ -12,11 +12,7 @@ public class AndBooleanValue extends BooleanValue {
 
     @SafeVarargs
     public AndBooleanValue(Value<Boolean>... args) {
-        for(Value<Boolean> v : args) {
-            addDependentValue(v);
-        }
-
-        setWrappedValue(new ValueSupplier<>(() -> {
+        ValueSupplier<Boolean> supplier = new ValueSupplier<>(() -> {
             for(Value<Boolean> arg : args) {
                 Boolean b = arg.get();
                 if(b == null || !b) {
@@ -24,7 +20,13 @@ public class AndBooleanValue extends BooleanValue {
                 }
             }
             return true;
-        }));
+        });
+
+        for(Value<Boolean> v : args) {
+            supplier.addDependentValue(v);
+        }
+
+        setWrappedValue(supplier);
     }
 
     @Override

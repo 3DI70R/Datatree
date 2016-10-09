@@ -1,6 +1,7 @@
 package ru.threedisevenzeror.datatree.wrapper.number;
 
 import ru.threedisevenzeror.datatree.base.Value;
+import ru.threedisevenzeror.datatree.wrapper.text.StringValue;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
@@ -25,6 +26,16 @@ public class ShortValue extends NumberValue<Short> {
     @Override
     public ShortValue asShort() {
         return this;
+    }
+
+    @Override
+    public ShortValue withNullValueAs(Short nullValue) {
+        return new ShortValue(super.withNullValueAs(nullValue).getWrappedValue());
+    }
+
+    @Override
+    public ShortValue withNullValueAs(Value<Short> value) {
+        return new ShortValue(super.withNullValueAs(value).getWrappedValue());
     }
 
     @Override

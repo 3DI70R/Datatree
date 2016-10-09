@@ -28,6 +28,16 @@ public class IntegerValue extends NumberValue<Integer> {
     }
 
     @Override
+    public IntegerValue withNullValueAs(Integer nullValue) {
+        return new IntegerValue(super.withNullValueAs(nullValue).getWrappedValue());
+    }
+
+    @Override
+    public IntegerValue withNullValueAs(Value<Integer> value) {
+        return new IntegerValue(super.withNullValueAs(value).getWrappedValue());
+    }
+
+    @Override
     public IntegerValue debounce(Value<TimeUnit> timeUnit, Value<Long> time) {
         return new IntegerValue(super.debounce(timeUnit, time).getWrappedValue());
     }

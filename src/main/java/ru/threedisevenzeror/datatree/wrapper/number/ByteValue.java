@@ -28,6 +28,16 @@ public class ByteValue extends NumberValue<Byte> {
     }
 
     @Override
+    public ByteValue withNullValueAs(Byte nullValue) {
+        return new ByteValue(super.withNullValueAs(nullValue).getWrappedValue());
+    }
+
+    @Override
+    public ByteValue withNullValueAs(Value<Byte> value) {
+        return new ByteValue(super.withNullValueAs(value).getWrappedValue());
+    }
+
+    @Override
     public ByteValue debounce(Value<TimeUnit> timeUnit, Value<Long> time) {
         return new ByteValue(super.debounce(timeUnit, time).getWrappedValue());
     }

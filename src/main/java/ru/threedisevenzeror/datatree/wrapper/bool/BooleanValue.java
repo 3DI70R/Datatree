@@ -5,6 +5,7 @@ import ru.threedisevenzeror.datatree.base.Value;
 import ru.threedisevenzeror.datatree.base.functional.ValueFunction;
 import ru.threedisevenzeror.datatree.wrapper.ObjectValue;
 import ru.threedisevenzeror.datatree.wrapper.number.IntegerValue;
+import ru.threedisevenzeror.datatree.wrapper.number.NumberValue;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
@@ -79,6 +80,16 @@ public class BooleanValue extends ObjectValue<Boolean> {
         value.addDependentValue(nullValue);
 
         return new ObjectValue<>(value);
+    }
+
+    @Override
+    public BooleanValue withNullValueAs(Boolean nullValue) {
+        return new BooleanValue(super.withNullValueAs(nullValue).getWrappedValue());
+    }
+
+    @Override
+    public BooleanValue withNullValueAs(Value<Boolean> value) {
+        return new BooleanValue(super.withNullValueAs(value).getWrappedValue());
     }
 
     @Override

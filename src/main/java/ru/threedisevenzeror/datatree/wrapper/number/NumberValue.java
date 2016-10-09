@@ -1,5 +1,6 @@
 package ru.threedisevenzeror.datatree.wrapper.number;
 
+import ru.threedisevenzeror.datatree.base.ConstantValue;
 import ru.threedisevenzeror.datatree.base.Value;
 import ru.threedisevenzeror.datatree.base.functional.ValueFunction;
 import ru.threedisevenzeror.datatree.wrapper.bool.BooleanValue;
@@ -96,11 +97,19 @@ public class NumberValue<T extends Number> extends ObjectValue<T> {
         return new IntegerValue(func);
     }
 
+    public BooleanValue greaterThan(Number otherValue) {
+        return greaterThan(new ConstantValue<>(otherValue));
+    }
+
     public BooleanValue greaterThan(Value<? extends Number> otherValue) {
         ValueFunction<Integer, Boolean> func = new ValueFunction<>("greaterThan",
                 compareTo(otherValue).getWrappedValue(), v -> v > 0);
         func.addDependentValue(otherValue);
         return new BooleanValue(func);
+    }
+
+    public BooleanValue greaterThanOrEquals(Number otherValue) {
+        return greaterThanOrEquals(new ConstantValue<>(otherValue));
     }
 
     public BooleanValue greaterThanOrEquals(Value<? extends Number> otherValue) {
@@ -110,6 +119,10 @@ public class NumberValue<T extends Number> extends ObjectValue<T> {
         return new BooleanValue(func);
     }
 
+    public BooleanValue lessThan(Number otherValue) {
+        return lessThan(new ConstantValue<>(otherValue));
+    }
+
     public BooleanValue lessThan(Value<? extends Number> otherValue) {
         ValueFunction<Integer, Boolean> func = new ValueFunction<>("lessThan",
                 compareTo(otherValue).getWrappedValue(), v -> v < 0);
@@ -117,11 +130,25 @@ public class NumberValue<T extends Number> extends ObjectValue<T> {
         return new BooleanValue(func);
     }
 
+    public BooleanValue lessThanOrEquals(Number otherValue) {
+        return lessThanOrEquals(new ConstantValue<>(otherValue));
+    }
+
     public BooleanValue lessThanOrEquals(Value<? extends Number> otherValue) {
         ValueFunction<Integer, Boolean> func = new ValueFunction<>("lessThanOrEquals",
                 compareTo(otherValue).getWrappedValue(), v -> v <= 0);
         func.addDependentValue(otherValue);
         return new BooleanValue(func);
+    }
+
+    @Override
+    public NumberValue<T> withNullValueAs(T nullValue) {
+        return new NumberValue<>(super.withNullValueAs(nullValue).getWrappedValue());
+    }
+
+    @Override
+    public NumberValue<T> withNullValueAs(Value<T> value) {
+        return new NumberValue<>(super.withNullValueAs(value).getWrappedValue());
     }
 
     @Override

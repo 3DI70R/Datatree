@@ -3,6 +3,7 @@ package ru.threedisevenzeror.datatree.wrapper.text;
 import ru.threedisevenzeror.datatree.base.ConstantValue;
 import ru.threedisevenzeror.datatree.base.Value;
 import ru.threedisevenzeror.datatree.base.functional.ValueFunction;
+import ru.threedisevenzeror.datatree.wrapper.ObjectValue;
 import ru.threedisevenzeror.datatree.wrapper.bool.BooleanValue;
 import ru.threedisevenzeror.datatree.wrapper.number.NumberValue;
 
@@ -171,6 +172,16 @@ public class StringValue extends TextValue<String> {
 
             return null;
         }));
+    }
+
+    @Override
+    public StringValue withNullValueAs(String nullValue) {
+        return new StringValue(super.withNullValueAs(nullValue).getWrappedValue());
+    }
+
+    @Override
+    public StringValue withNullValueAs(Value<String> value) {
+        return new StringValue(super.withNullValueAs(value).getWrappedValue());
     }
 
     @Override

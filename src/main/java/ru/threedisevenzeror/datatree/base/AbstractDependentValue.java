@@ -81,11 +81,15 @@ public abstract class AbstractDependentValue<T, V> extends AbstractMutableValue<
 
     protected void updateValue() {
         T newValue = getNewValue();
-        if(!Objects.equals(currentValue, newValue)) {
+        if(isObjectsDiffers(currentValue, newValue)) {
             T oldValue = currentValue;
             currentValue = newValue;
             notifyListeners(oldValue, currentValue);
         }
+    }
+
+    protected boolean isObjectsDiffers(T left, T right) {
+        return !Objects.equals(left, right);
     }
 
     public List<Value<? extends V>> getDependentValues() {

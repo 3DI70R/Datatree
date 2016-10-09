@@ -28,6 +28,16 @@ public class DoubleValue extends NumberValue<Double> {
     }
 
     @Override
+    public DoubleValue withNullValueAs(Double nullValue) {
+        return new DoubleValue(super.withNullValueAs(nullValue).getWrappedValue());
+    }
+
+    @Override
+    public DoubleValue withNullValueAs(Value<Double> value) {
+        return new DoubleValue(super.withNullValueAs(value).getWrappedValue());
+    }
+
+    @Override
     public DoubleValue debounce(Value<? extends Executor> executor, Value<TimeUnit> timeUnit, Value<Long> time) {
         return new DoubleValue(super.debounce(executor, timeUnit, time).getWrappedValue());
     }

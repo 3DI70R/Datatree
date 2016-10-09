@@ -14,6 +14,10 @@ public class ValueFunction<F, T> extends AbstractDependentValue<T, Object> {
     private Function<F, T> function;
     private String name;
 
+    public ValueFunction(Value<F> value, Function<F, T> function) {
+        this("unnamed function", value, function);
+    }
+
     public ValueFunction(String name, Value<F> value, Function<F, T> function) {
         this.name = name;
         this.value = value;

@@ -13,6 +13,7 @@ import java.util.Objects;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 
 /**
  * Created by ThreeDISevenZeroR on 05.10.2016.
@@ -44,6 +45,33 @@ public class ObjectValue<T> extends AbstractValueWrapper<T> {
         ValueFunction<?, Boolean> function = new ValueFunction<>("equals", getWrappedValue(), f -> Objects.equals(f, obj.get()));
         function.addDependentValue(obj);
         return new BooleanValue(function);
+    }
+
+    public <R> ObjectValue<R> withFunction(Value<Function<T, R>> function) {
+        ValueFunction<T, R> func = new ValueFunction<>("custom function", getWrappedValue(), v -> {
+            Function<T, R> otherFunc = function.get();
+            if(otherFunc != null) {
+                return otherFunc.apply(v);
+            } else {
+                return null;
+            }
+        });
+        func.addDependentValue(function);
+        return new ObjectValue<>(func);
+    }
+
+    public <R> ObjectValue<R> withFunction(Function<T, R> function) {
+        return new ObjectValue<>(new ValueFunction<>("custom function", getWrappedValue(), function));
+    }
+
+    public ObjectValue<T> withNullValueAs(T nullValue) {
+        return withNullValueAs(new ConstantValue<>(nullValue));
+    }
+
+    public ObjectValue<T> withNullValueAs(Value<T> value) {
+        ValueFunction<T, T> func = new ValueFunction<>("withNullValueAs", getWrappedValue(), t -> t != null ? t : value.get());
+        func.addDependentValue(value);
+        return new ObjectValue<>(func);
     }
 
     public ObjectValue<T> debounce(Value<TimeUnit> timeUnit, Value<Long> time) {

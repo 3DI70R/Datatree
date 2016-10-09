@@ -31,6 +31,16 @@ public class TextValue<T extends CharSequence> extends ObjectValue<T> {
     }
 
     @Override
+    public TextValue<T> withNullValueAs(T nullValue) {
+        return new TextValue<>(super.withNullValueAs(nullValue).getWrappedValue());
+    }
+
+    @Override
+    public TextValue<T> withNullValueAs(Value<T> value) {
+        return new TextValue<>(super.withNullValueAs(value).getWrappedValue());
+    }
+
+    @Override
     public TextValue<T> debounce(Value<TimeUnit> timeUnit, Value<Long> time) {
         return new TextValue<>(super.debounce(timeUnit, time).getWrappedValue());
     }

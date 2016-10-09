@@ -28,6 +28,16 @@ public class LongValue extends NumberValue<Long> {
     }
 
     @Override
+    public LongValue withNullValueAs(Long nullValue) {
+        return new LongValue(super.withNullValueAs(nullValue).getWrappedValue());
+    }
+
+    @Override
+    public LongValue withNullValueAs(Value<Long> value) {
+        return new LongValue(super.withNullValueAs(value).getWrappedValue());
+    }
+
+    @Override
     public LongValue debounce(Value<TimeUnit> timeUnit, Value<Long> time) {
         return new LongValue(super.debounce(timeUnit, time).getWrappedValue());
     }

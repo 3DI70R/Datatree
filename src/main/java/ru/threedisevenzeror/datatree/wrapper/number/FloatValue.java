@@ -28,6 +28,16 @@ public class FloatValue extends NumberValue<Float> {
     }
 
     @Override
+    public FloatValue withNullValueAs(Float nullValue) {
+        return new FloatValue(super.withNullValueAs(nullValue).getWrappedValue());
+    }
+
+    @Override
+    public FloatValue withNullValueAs(Value<Float> value) {
+        return new FloatValue(super.withNullValueAs(value).getWrappedValue());
+    }
+
+    @Override
     public FloatValue debounce(Value<TimeUnit> timeUnit, Value<Long> time) {
         return new FloatValue(super.debounce(timeUnit, time).getWrappedValue());
     }

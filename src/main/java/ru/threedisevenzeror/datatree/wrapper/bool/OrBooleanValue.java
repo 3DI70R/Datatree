@@ -12,11 +12,7 @@ public class OrBooleanValue extends BooleanValue {
 
     @SafeVarargs
     public OrBooleanValue(Value<Boolean>... args) {
-        for(Value<Boolean> v : args) {
-            addDependentValue(v);
-        }
-
-        setWrappedValue(new ValueSupplier<>(() -> {
+        ValueSupplier<Boolean> supplier = new ValueSupplier<>(() -> {
             for(Value<Boolean> arg : args) {
                 Boolean b = arg.get();
                 if(b != null && b) {
@@ -24,7 +20,13 @@ public class OrBooleanValue extends BooleanValue {
                 }
             }
             return false;
-        }));
+        });
+
+        for(Value<Boolean> v : args) {
+            supplier.addDependentValue(v);
+        }
+
+        setWrappedValue(supplier);
     }
 
     @Override
