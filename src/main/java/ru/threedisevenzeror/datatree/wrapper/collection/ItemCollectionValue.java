@@ -30,13 +30,13 @@ public abstract class ItemCollectionValue<C, K, V> extends ObjectValue<C> {
     protected abstract int getCollectionCount();
 
     public IntegerValue count() {
-        ValueSupplier<Integer> supplier = new ValueSupplier<>(this::getCollectionCount);
+        ValueSupplier<Integer> supplier = new ValueSupplier<>("count", this::getCollectionCount);
         supplier.addDependentValue(this);
         return new IntegerValue(supplier);
     }
 
     public ObjectValue<V> valueAt(K index) {
-        return valueAt(new ConstantValue<>(index));
+        return valueAt(Value.constant(index));
     }
 
     public ObjectValue<V> valueAt(Value<K> index) {
@@ -52,7 +52,7 @@ public abstract class ItemCollectionValue<C, K, V> extends ObjectValue<C> {
     }
 
     public ItemCollectionValue<C, K, V> filter(IndexedPredicate<K, V> predicate) {
-        return filter(new ConstantValue<>(predicate));
+        return filter(Value.constant(predicate));
     }
 
     public abstract ItemCollectionValue<C, K, V> filter(Value<IndexedPredicate<K, V>> predicate);

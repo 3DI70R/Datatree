@@ -82,7 +82,7 @@ public class ListValue<T> extends ItemCollectionValue<List<T>, Integer, T> {
     }
 
     public <N> ListValue<N> map(Function<T, N> function) {
-        return map(new ConstantValue<>(function));
+        return map(Value.constant(function));
     }
 
     public <N> ListValue<N> map(Value<Function<T, N>> function) {

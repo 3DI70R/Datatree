@@ -23,15 +23,19 @@ if(countInt < names.length && countInt >= 0) {
 
 ```java
 VariableValue<String> countString = new VariableValue<>("5");
-IntegerValue countInt = new StringValue(countString).asNumber().asInteger().withNullValueAs(0);
-ArrayValue<String> names = new ArrayValue<>("zero", "one", "two", "three", "four", "five","six", "seven", "eight", "nine", "ten");
 
-Value<String> text = (countInt.lessThan(names.count())).and(countInt.greaterThanOrEquals(0)).asCondition(
-            new StringValue("%1$s по английски?, легко, это \"%2$s!\"")
+IntegerValue countInt = countString.asString().asNumber().asInteger().withNullValueAs(0);
+ArrayValue<String> names = Value.constant("zero", "one", "two", "three", "four", "five","six", "seven", "eight", "nine", "ten");
+
+StringValue text =
+        (countInt.lessThan(names.count())).and(countInt.greaterThanOrEquals(0)).asCondition(
+            Value.constant("%1$s по английски?, легко, это \"%2$s!\"")
                     .format(countInt, names.valueAt(countInt)),
-            new StringValue("Извините, я не знаю как будет %1$s по английски, спросите что нибудь в диапазоне от 0 до %2$s")
+            Value.constant("Извините, я не знаю как будет %1$s по английски, спросите что нибудь в диапазоне от 0 до %2$s")
                     .format(countInt, names.count().withFunction(v -> v - 1)))
-        .debounce(TimeUnit.MILLISECONDS, 250);
+        .debounce(TimeUnit.MILLISECONDS, 100)
+        .asString();
+);
 ```
 
 При изменении count, изменится и значение лежащее в title. Если countString не удалось преобразовать в число, вместо него будет 0.

@@ -20,7 +20,7 @@ public class BooleanValue extends ObjectValue<Boolean> {
     }
 
     public BooleanValue(Boolean value) {
-        this(new ConstantValue<>(value));
+        this(Value.constant(value));
     }
 
     public BooleanValue(Value<Boolean> value) {
@@ -63,7 +63,7 @@ public class BooleanValue extends ObjectValue<Boolean> {
 
     public <T> ObjectValue<T> asCondition(Value<? extends T> trueValue,
                                           Value<? extends T> falseValue) {
-        return asCondition(trueValue, falseValue, new ConstantValue<>(null));
+        return asCondition(trueValue, falseValue, Value.empty());
     }
 
     public <T> ObjectValue<T> asCondition(Value<? extends T> trueValue,

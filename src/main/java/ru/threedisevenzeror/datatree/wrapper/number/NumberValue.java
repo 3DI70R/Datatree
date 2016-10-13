@@ -98,7 +98,7 @@ public class NumberValue<T extends Number> extends ObjectValue<T> {
     }
 
     public BooleanValue greaterThan(Number otherValue) {
-        return greaterThan(new ConstantValue<>(otherValue));
+        return greaterThan(Value.constant(otherValue));
     }
 
     public BooleanValue greaterThan(Value<? extends Number> otherValue) {
@@ -109,7 +109,7 @@ public class NumberValue<T extends Number> extends ObjectValue<T> {
     }
 
     public BooleanValue greaterThanOrEquals(Number otherValue) {
-        return greaterThanOrEquals(new ConstantValue<>(otherValue));
+        return greaterThanOrEquals(Value.constant(otherValue));
     }
 
     public BooleanValue greaterThanOrEquals(Value<? extends Number> otherValue) {
@@ -120,7 +120,7 @@ public class NumberValue<T extends Number> extends ObjectValue<T> {
     }
 
     public BooleanValue lessThan(Number otherValue) {
-        return lessThan(new ConstantValue<>(otherValue));
+        return lessThan(Value.constant(otherValue));
     }
 
     public BooleanValue lessThan(Value<? extends Number> otherValue) {
@@ -131,7 +131,7 @@ public class NumberValue<T extends Number> extends ObjectValue<T> {
     }
 
     public BooleanValue lessThanOrEquals(Number otherValue) {
-        return lessThanOrEquals(new ConstantValue<>(otherValue));
+        return lessThanOrEquals(Value.constant(otherValue));
     }
 
     public BooleanValue lessThanOrEquals(Value<? extends Number> otherValue) {

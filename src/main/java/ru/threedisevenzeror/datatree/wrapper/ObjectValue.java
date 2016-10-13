@@ -8,16 +8,12 @@ import ru.threedisevenzeror.datatree.base.functional.ValueSupplier;
 import ru.threedisevenzeror.datatree.logical.DebounceValue;
 import ru.threedisevenzeror.datatree.logical.DelayValue;
 import ru.threedisevenzeror.datatree.logical.UpdateOnAnotherThreadValue;
+import ru.threedisevenzeror.datatree.util.Function;
 import ru.threedisevenzeror.datatree.wrapper.bool.BooleanValue;
 import ru.threedisevenzeror.datatree.wrapper.text.StringValue;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
 
 /**
  * Created by ThreeDISevenZeroR on 05.10.2016.
@@ -29,94 +25,87 @@ public class ObjectValue<T> extends AbstractValueWrapper<T> {
     }
 
     public ObjectValue(T value) {
-        super(new ConstantValue<>(value));
+        super(Value.constant(value));
     }
 
     public ObjectValue(Value<T> value) {
         super(value);
     }
 
+    @Override
     public StringValue asString() {
-        return new StringValue(new ValueFunction<>("asString", getWrappedValue(),
-                v -> v != null ? v.toString() : null));
+        return getWrappedValue().asString();
     }
 
+    @Override
     public BooleanValue notEquals(Value<?> obj) {
-        return equals(obj).not();
+        return getWrappedValue().notEquals(obj);
     }
 
+    @Override
     public BooleanValue equals(Value<?> obj) {
-        ValueFunction<?, Boolean> function = new ValueFunction<>("equals", getWrappedValue(), f -> Objects.equals(f, obj.get()));
-        function.addDependentValue(obj);
-        return new BooleanValue(function);
+        return getWrappedValue().equals(obj);
     }
 
-    public <R> ObjectValue<R> withFunction(Value<Function<T, R>> function) {
-        ValueFunction<T, R> func = new ValueFunction<>("custom function", getWrappedValue(), v -> {
-            Function<T, R> otherFunc = function.get();
-            if(otherFunc != null) {
-                return otherFunc.apply(v);
-            } else {
-                return null;
-            }
-        });
-        func.addDependentValue(function);
-        return new ObjectValue<>(func);
-    }
-
-    public ObjectValue<T> updateOn(Executor executor) {
-        return new ObjectValue<>(new UpdateOnAnotherThreadValue<>(getWrappedValue(), new ConstantValue<>(executor)));
-    }
-
-    public ObjectValue<T> updateOn(Value<? extends Executor> executor) {
-        return new ObjectValue<>(new UpdateOnAnotherThreadValue<>(getWrappedValue(), executor));
-    }
-
+    @Override
     public <R> ObjectValue<R> withFunction(Function<T, R> function) {
-        return new ObjectValue<>(new ValueFunction<>("custom function", getWrappedValue(), function));
+        return new ObjectValue<>(getWrappedValue().withFunction(function));
     }
 
+    @Override
+    public <R> ObjectValue<R> withFunction(Value<Function<T, R>> function) {
+        return new ObjectValue<>(getWrappedValue().withFunction(function));
+    }
+
+    @Override
+    public ObjectValue<T> updateOn(Executor executor) {
+        return new ObjectValue<>(getWrappedValue().updateOn(executor));
+    }
+
+    @Override
+    public ObjectValue<T> updateOn(Value<? extends Executor> executor) {
+        return new ObjectValue<>(getWrappedValue().updateOn(executor));
+    }
+
+    @Override
     public ObjectValue<T> withNullValueAs(T nullValue) {
-        return withNullValueAs(new ConstantValue<>(nullValue));
+        return new ObjectValue<>(getWrappedValue().withNullValueAs(nullValue));
     }
 
+    @Override
     public ObjectValue<T> withNullValueAs(Value<T> value) {
-        ValueFunction<T, T> func = new ValueFunction<>("withNullValueAs", getWrappedValue(), t -> t != null ? t : value.get());
-        func.addDependentValue(value);
-        return new ObjectValue<>(func);
+        return new ObjectValue<>(getWrappedValue().withNullValueAs(value));
     }
 
     public ObjectValue<T> debounce(Value<TimeUnit> timeUnit, Value<Long> time) {
-        return new ObjectValue<>(new DebounceValue<>(getWrappedValue(),
-                new ConstantValue<>(Executors.newCachedThreadPool()), timeUnit, time));
+        return new ObjectValue<>(getWrappedValue().debounce(timeUnit, time));
     }
 
     public ObjectValue<T> debounce(Value<? extends Executor> executor, Value<TimeUnit> timeUnit, Value<Long> time) {
-        return new ObjectValue<>(new DebounceValue<>(getWrappedValue(), executor, timeUnit, time));
+        return new ObjectValue<>(getWrappedValue().debounce(executor, timeUnit, time));
     }
 
     public ObjectValue<T> debounce(TimeUnit timeUnit, long time) {
-        return debounce(new ConstantValue<>(Executors.newSingleThreadExecutor()),
-                new ConstantValue<>(timeUnit), new ConstantValue<>(time));
+        return new ObjectValue<>(getWrappedValue().debounce(timeUnit, time));
     }
 
     public ObjectValue<T> debounce(Executor executor, TimeUnit timeUnit, long time) {
-        return debounce(new ConstantValue<>(executor), new ConstantValue<>(timeUnit), new ConstantValue<>(time));
+        return new ObjectValue<>(getWrappedValue().debounce(executor, timeUnit, time));
     }
 
     public ObjectValue<T> delay(Value<TimeUnit> timeUnit, Value<Long> time) {
-        return delay(new ConstantValue<>(Executors.newSingleThreadExecutor()), timeUnit, time);
+        return new ObjectValue<>(getWrappedValue().delay(timeUnit, time));
     }
 
     public ObjectValue<T> delay(Value<? extends Executor> executor, Value<TimeUnit> timeUnit, Value<Long> time) {
-        return new ObjectValue<>(new DelayValue<>(getWrappedValue(), executor, timeUnit, time));
+        return new ObjectValue<>(getWrappedValue().delay(timeUnit, time));
     }
 
     public ObjectValue<T> delay(TimeUnit timeUnit, long time) {
-        return delay(Executors.newSingleThreadExecutor(), timeUnit, time);
+        return new ObjectValue<>(getWrappedValue().delay(timeUnit, time));
     }
 
     public ObjectValue<T> delay(Executor executor, TimeUnit timeUnit, long time) {
-        return delay(new ConstantValue<>(executor), new ConstantValue<>(timeUnit), new ConstantValue<>(time));
+        return new ObjectValue<>(getWrappedValue().delay(executor, timeUnit, time));
     }
 }

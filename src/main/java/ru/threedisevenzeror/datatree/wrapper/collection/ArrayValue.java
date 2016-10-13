@@ -71,7 +71,7 @@ public class ArrayValue<T> extends ItemCollectionValue<T[], Integer, T> {
 
     @Override
     public ArrayValue<T> filter(IndexedPredicate<Integer, T> predicate) {
-        return filter(new ConstantValue<>(predicate));
+        return filter(Value.constant(predicate));
     }
 
     @Override

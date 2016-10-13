@@ -23,7 +23,7 @@ public class StringValue extends TextValue<String> {
     }
 
     public StringValue(String value) {
-        this(new ConstantValue<>(value));
+        this(Value.constant(value));
     }
 
     public StringValue(Value<String> value) {
@@ -36,7 +36,7 @@ public class StringValue extends TextValue<String> {
     }
 
     public BooleanValue contains(CharSequence text) {
-        return contains(new ConstantValue<>(text));
+        return contains(Value.constant(text));
     }
 
     public BooleanValue contains(Value<? extends CharSequence> text) {
@@ -56,7 +56,7 @@ public class StringValue extends TextValue<String> {
     }
 
     public StringValue concat(String text) {
-        return concat(new ConstantValue<>(text));
+        return concat(Value.constant(text));
     }
 
     public StringValue concat(Value<String> text) {
@@ -85,7 +85,7 @@ public class StringValue extends TextValue<String> {
     }
 
     public StringValue toLowerCase(Locale locale) {
-        return toLowerCase(new ConstantValue<>(locale));
+        return toLowerCase(Value.constant(locale));
     }
 
     public StringValue toLowerCase(Value<Locale> locale) {
@@ -100,7 +100,7 @@ public class StringValue extends TextValue<String> {
     }
 
     public StringValue toUpperCase(Locale locale) {
-        return toUpperCase(new ConstantValue<>(locale));
+        return toUpperCase(Value.constant(locale));
     }
 
     public StringValue toUpperCase(Value<Locale> locale) {
@@ -111,7 +111,7 @@ public class StringValue extends TextValue<String> {
     }
 
     public BooleanValue equalsIgnoreCase(String value) {
-        return equalsIgnoreCase(new ConstantValue<>(value));
+        return equalsIgnoreCase(Value.constant(value));
     }
 
     public BooleanValue equalsIgnoreCase(Value<String> value) {
@@ -129,14 +129,14 @@ public class StringValue extends TextValue<String> {
         Value<?>[] valueArgs = new Value[args.length];
 
         for(int i = 0; i < args.length; i++) {
-            valueArgs[i] = new ConstantValue<>(args[i]);
+            valueArgs[i] = Value.constant(args[i]);
         }
 
-        return format(new ConstantValue<>(locale), valueArgs);
+        return format(Value.constant(locale), valueArgs);
     }
 
     public StringValue format(Value<?>... args) {
-        return format(new ConstantValue<>(Locale.getDefault()), args);
+        return format(Value.constant(Locale.getDefault()), args);
     }
 
     public StringValue format(Value<Locale> locale, Value<?>... args) {

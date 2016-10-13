@@ -20,7 +20,7 @@ public class TextValue<T extends CharSequence> extends ObjectValue<T> {
     }
 
     public TextValue(T value) {
-        this(new ConstantValue<>(value));
+        this(Value.constant(value));
     }
 
     public TextValue(Value<T> value) {
