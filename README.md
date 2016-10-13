@@ -35,7 +35,6 @@ StringValue text =
                     .format(countInt, names.count().withFunction(v -> v - 1)))
         .debounce(TimeUnit.MILLISECONDS, 100)
         .asString();
-);
 ```
 
 При изменении count, изменится и значение лежащее в title. Если countString не удалось преобразовать в число, вместо него будет 0.
