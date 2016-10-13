@@ -142,6 +142,16 @@ public class NumberValue<T extends Number> extends ObjectValue<T> {
     }
 
     @Override
+    public NumberValue<T> updateOn(Executor nullValue) {
+        return new NumberValue<>(super.updateOn(nullValue).getWrappedValue());
+    }
+
+    @Override
+    public NumberValue<T> updateOn(Value<? extends Executor> value) {
+        return new NumberValue<>(super.updateOn(value).getWrappedValue());
+    }
+
+    @Override
     public NumberValue<T> withNullValueAs(T nullValue) {
         return new NumberValue<>(super.withNullValueAs(nullValue).getWrappedValue());
     }

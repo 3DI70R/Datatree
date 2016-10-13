@@ -4,6 +4,7 @@ import ru.threedisevenzeror.datatree.base.AbstractDependentValue;
 import ru.threedisevenzeror.datatree.base.OnValueChangedListener;
 import ru.threedisevenzeror.datatree.base.Value;
 
+import java.util.List;
 import java.util.function.Supplier;
 
 /**
@@ -15,6 +16,14 @@ public class ValueSupplier<T> extends AbstractDependentValue<T, Object> {
 
     public ValueSupplier(Supplier<T> supplier) {
         this.supplier = supplier;
+    }
+
+    public ValueSupplier(Supplier<T> supplier, Value<?>... dependentValues) {
+        this.supplier = supplier;
+
+        for(Value<?> v : dependentValues) {
+            addDependentValue(v);
+        }
     }
 
     @Override

@@ -28,6 +28,16 @@ public class LongValue extends NumberValue<Long> {
     }
 
     @Override
+    public LongValue updateOn(Executor nullValue) {
+        return new LongValue(super.updateOn(nullValue).getWrappedValue());
+    }
+
+    @Override
+    public LongValue updateOn(Value<? extends Executor> value) {
+        return new LongValue(super.updateOn(value).getWrappedValue());
+    }
+
+    @Override
     public LongValue withNullValueAs(Long nullValue) {
         return new LongValue(super.withNullValueAs(nullValue).getWrappedValue());
     }

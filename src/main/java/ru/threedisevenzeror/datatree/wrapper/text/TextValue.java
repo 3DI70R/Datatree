@@ -4,6 +4,7 @@ import ru.threedisevenzeror.datatree.base.ConstantValue;
 import ru.threedisevenzeror.datatree.base.Value;
 import ru.threedisevenzeror.datatree.base.functional.ValueFunction;
 import ru.threedisevenzeror.datatree.wrapper.ObjectValue;
+import ru.threedisevenzeror.datatree.wrapper.collection.ArrayValue;
 import ru.threedisevenzeror.datatree.wrapper.number.IntegerValue;
 
 import java.util.concurrent.Executor;
@@ -28,6 +29,16 @@ public class TextValue<T extends CharSequence> extends ObjectValue<T> {
 
     public IntegerValue length() {
         return new IntegerValue(new ValueFunction<>("length", getWrappedValue(), v -> v != null ? v.length() : 0));
+    }
+
+    @Override
+    public TextValue<T> updateOn(Executor nullValue) {
+        return new TextValue<>(super.updateOn(nullValue).getWrappedValue());
+    }
+
+    @Override
+    public TextValue<T> updateOn(Value<? extends Executor> value) {
+        return new TextValue<>(super.updateOn(value).getWrappedValue());
     }
 
     @Override

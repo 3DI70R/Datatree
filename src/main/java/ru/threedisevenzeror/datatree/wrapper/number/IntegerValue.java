@@ -28,6 +28,16 @@ public class IntegerValue extends NumberValue<Integer> {
     }
 
     @Override
+    public IntegerValue updateOn(Executor nullValue) {
+        return new IntegerValue(super.updateOn(nullValue).getWrappedValue());
+    }
+
+    @Override
+    public IntegerValue updateOn(Value<? extends Executor> value) {
+        return new IntegerValue(super.updateOn(value).getWrappedValue());
+    }
+
+    @Override
     public IntegerValue withNullValueAs(Integer nullValue) {
         return new IntegerValue(super.withNullValueAs(nullValue).getWrappedValue());
     }

@@ -28,6 +28,16 @@ public class ByteValue extends NumberValue<Byte> {
     }
 
     @Override
+    public ByteValue updateOn(Executor nullValue) {
+        return new ByteValue(super.updateOn(nullValue).getWrappedValue());
+    }
+
+    @Override
+    public ByteValue updateOn(Value<? extends Executor> value) {
+        return new ByteValue(super.updateOn(value).getWrappedValue());
+    }
+
+    @Override
     public ByteValue withNullValueAs(Byte nullValue) {
         return new ByteValue(super.withNullValueAs(nullValue).getWrappedValue());
     }

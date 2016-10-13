@@ -28,6 +28,16 @@ public class FloatValue extends NumberValue<Float> {
     }
 
     @Override
+    public FloatValue updateOn(Executor nullValue) {
+        return new FloatValue(super.updateOn(nullValue).getWrappedValue());
+    }
+
+    @Override
+    public FloatValue updateOn(Value<? extends Executor> value) {
+        return new FloatValue(super.updateOn(value).getWrappedValue());
+    }
+
+    @Override
     public FloatValue withNullValueAs(Float nullValue) {
         return new FloatValue(super.withNullValueAs(nullValue).getWrappedValue());
     }

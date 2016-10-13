@@ -28,6 +28,16 @@ public class DoubleValue extends NumberValue<Double> {
     }
 
     @Override
+    public DoubleValue updateOn(Executor nullValue) {
+        return new DoubleValue(super.updateOn(nullValue).getWrappedValue());
+    }
+
+    @Override
+    public DoubleValue updateOn(Value<? extends Executor> value) {
+        return new DoubleValue(super.updateOn(value).getWrappedValue());
+    }
+
+    @Override
     public DoubleValue withNullValueAs(Double nullValue) {
         return new DoubleValue(super.withNullValueAs(nullValue).getWrappedValue());
     }

@@ -175,6 +175,16 @@ public class StringValue extends TextValue<String> {
     }
 
     @Override
+    public StringValue updateOn(Executor nullValue) {
+        return new StringValue(super.updateOn(nullValue).getWrappedValue());
+    }
+
+    @Override
+    public StringValue updateOn(Value<? extends Executor> value) {
+        return new StringValue(super.updateOn(value).getWrappedValue());
+    }
+
+    @Override
     public StringValue withNullValueAs(String nullValue) {
         return new StringValue(super.withNullValueAs(nullValue).getWrappedValue());
     }

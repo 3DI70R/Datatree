@@ -29,6 +29,16 @@ public class ShortValue extends NumberValue<Short> {
     }
 
     @Override
+    public ShortValue updateOn(Executor nullValue) {
+        return new ShortValue(super.updateOn(nullValue).getWrappedValue());
+    }
+
+    @Override
+    public ShortValue updateOn(Value<? extends Executor> value) {
+        return new ShortValue(super.updateOn(value).getWrappedValue());
+    }
+
+    @Override
     public ShortValue withNullValueAs(Short nullValue) {
         return new ShortValue(super.withNullValueAs(nullValue).getWrappedValue());
     }

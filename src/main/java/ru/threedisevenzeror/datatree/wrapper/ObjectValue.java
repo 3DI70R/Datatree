@@ -4,11 +4,15 @@ import ru.threedisevenzeror.datatree.base.AbstractValueWrapper;
 import ru.threedisevenzeror.datatree.base.ConstantValue;
 import ru.threedisevenzeror.datatree.base.Value;
 import ru.threedisevenzeror.datatree.base.functional.ValueFunction;
+import ru.threedisevenzeror.datatree.base.functional.ValueSupplier;
 import ru.threedisevenzeror.datatree.logical.DebounceValue;
 import ru.threedisevenzeror.datatree.logical.DelayValue;
+import ru.threedisevenzeror.datatree.logical.UpdateOnAnotherThreadValue;
 import ru.threedisevenzeror.datatree.wrapper.bool.BooleanValue;
 import ru.threedisevenzeror.datatree.wrapper.text.StringValue;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -58,6 +62,14 @@ public class ObjectValue<T> extends AbstractValueWrapper<T> {
         });
         func.addDependentValue(function);
         return new ObjectValue<>(func);
+    }
+
+    public ObjectValue<T> updateOn(Executor executor) {
+        return new ObjectValue<>(new UpdateOnAnotherThreadValue<>(getWrappedValue(), new ConstantValue<>(executor)));
+    }
+
+    public ObjectValue<T> updateOn(Value<? extends Executor> executor) {
+        return new ObjectValue<>(new UpdateOnAnotherThreadValue<>(getWrappedValue(), executor));
     }
 
     public <R> ObjectValue<R> withFunction(Function<T, R> function) {

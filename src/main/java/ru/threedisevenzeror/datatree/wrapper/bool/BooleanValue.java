@@ -43,6 +43,7 @@ public class BooleanValue extends ObjectValue<Boolean> {
         return new IntegerValue(new ValueFunction<>("asNumber", getWrappedValue(), b -> b != null ? (b ? 1 : 0) : null));
     }
 
+
     public <T> ObjectValue<T> asCondition(T trueValue,
                                           T falseValue) {
         return asCondition(trueValue, falseValue, null);
@@ -80,6 +81,16 @@ public class BooleanValue extends ObjectValue<Boolean> {
         value.addDependentValue(nullValue);
 
         return new ObjectValue<>(value);
+    }
+
+    @Override
+    public BooleanValue updateOn(Executor nullValue) {
+        return new BooleanValue(super.updateOn(nullValue).getWrappedValue());
+    }
+
+    @Override
+    public BooleanValue updateOn(Value<? extends Executor> value) {
+        return new BooleanValue(super.updateOn(value).getWrappedValue());
     }
 
     @Override

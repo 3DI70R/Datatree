@@ -10,7 +10,6 @@ public class VariableValue<T> extends AbstractMutableValue<T> {
     private T value;
 
     public VariableValue() {
-
     }
 
     public VariableValue(T value) {
