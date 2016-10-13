@@ -12,14 +12,14 @@ public class OrBooleanValue extends BooleanValue {
 
     @SafeVarargs
     public OrBooleanValue(Value<Boolean>... args) {
-        setWrappedValue(Value.zip((v) -> {
+        setWrappedValue(Value.zip(args, (v) -> {
             for(Boolean arg : v) {
                 if(arg != null && arg) {
                     return true;
                 }
             }
             return false;
-        }, args));
+        }));
     }
 
     @Override

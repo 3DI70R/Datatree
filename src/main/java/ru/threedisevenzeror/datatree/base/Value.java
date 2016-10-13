@@ -249,7 +249,7 @@ public interface Value<T> {
                 v1, v2, v3, v4, v5, v6, v7, v8, v9);
     }
 
-    static <T, R> Value<R> zip(Function<List<T>, R> function, Value<T>... values) {
+    static <T, R> Value<R> zip(Value<T>[] values, Function<List<T>, R> function) {
         ValueSupplier<R> supplier = new ValueSupplier<>("zip array", () -> {
             List<T> results = new ArrayList<>(values.length);
             for(Value<T> v : values) {

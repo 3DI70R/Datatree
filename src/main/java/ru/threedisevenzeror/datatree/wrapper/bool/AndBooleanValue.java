@@ -12,14 +12,14 @@ public class AndBooleanValue extends BooleanValue {
 
     @SafeVarargs
     public AndBooleanValue(Value<Boolean>... args) {
-        setWrappedValue(Value.zip((v) -> {
+        setWrappedValue(Value.zip(args, (v) -> {
             for(Boolean arg : v) {
                 if(arg == null || !arg) {
                     return false;
                 }
             }
             return true;
-        }, args));
+        }));
     }
 
     @Override
