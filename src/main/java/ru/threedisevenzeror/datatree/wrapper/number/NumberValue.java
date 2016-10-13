@@ -57,6 +57,38 @@ public class NumberValue<T extends Number> extends ObjectValue<T> {
                 v -> v != null ? v.doubleValue() : null));
     }
 
+    public BooleanValue isInBoundsExclusiveExclusive(Number lowBounds, Number highBounds) {
+        return isInBoundsExclusiveExclusive(Value.constant(lowBounds), Value.constant(highBounds));
+    }
+
+    public BooleanValue isInBoundsExclusiveInclusive(Number lowBounds, Number highBounds) {
+        return isInBoundsExclusiveInclusive(Value.constant(lowBounds), Value.constant(highBounds));
+    }
+
+    public BooleanValue isInBoundsInclusiveExclusive(Number lowBounds, Number highBounds) {
+        return isInBoundsInclusiveExclusive(Value.constant(lowBounds), Value.constant(highBounds));
+    }
+
+    public BooleanValue isInBoundsInclusiveInclusive(Number lowBounds, Number highBounds) {
+        return isInBoundsInclusiveInclusive(Value.constant(lowBounds), Value.constant(highBounds));
+    }
+
+    public BooleanValue isInBoundsExclusiveExclusive(Value<? extends Number> lowBounds, Value<? extends Number> highBounds) {
+        return new BooleanValue(compareTo(lowBounds).greaterThan(0).and(compareTo(highBounds).lessThan(0)));
+    }
+
+    public BooleanValue isInBoundsExclusiveInclusive(Value<? extends Number> lowBounds, Value<? extends Number> highBounds) {
+        return new BooleanValue(compareTo(lowBounds).greaterThan(0).and(compareTo(highBounds).lessThanOrEquals(0)));
+    }
+
+    public BooleanValue isInBoundsInclusiveExclusive(Value<? extends Number> lowBounds, Value<? extends Number> highBounds) {
+        return new BooleanValue(compareTo(lowBounds).greaterThanOrEquals(0).and(compareTo(highBounds).lessThan(0)));
+    }
+
+    public BooleanValue isInBoundsInclusiveInclusive(Value<? extends Number> lowBounds, Value<? extends Number> highBounds) {
+        return new BooleanValue(compareTo(lowBounds).greaterThanOrEquals(0).and(compareTo(highBounds).lessThanOrEquals(0)));
+    }
+
     public IntegerValue compareTo(Value<? extends Number> otherValue) {
 
         ValueFunction<? extends Number, Integer> func = new ValueFunction<>("compareTo", getWrappedValue(), v -> {
