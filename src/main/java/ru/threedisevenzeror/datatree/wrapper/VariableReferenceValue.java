@@ -9,7 +9,11 @@ import ru.threedisevenzeror.datatree.base.VariableValue;
 public class VariableReferenceValue<T> extends AbstractReferenceValue<T, VariableValue<T>> {
 
     public VariableReferenceValue() {
-        this(null);
+        this((T) null);
+    }
+
+    public VariableReferenceValue(T value) {
+        setReference(new VariableValue<>(value));
     }
 
     public VariableReferenceValue(VariableValue<T> value) {
