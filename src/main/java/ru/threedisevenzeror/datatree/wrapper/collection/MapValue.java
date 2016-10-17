@@ -3,6 +3,7 @@ package ru.threedisevenzeror.datatree.wrapper.collection;
 import ru.threedisevenzeror.datatree.base.Value;
 import ru.threedisevenzeror.datatree.base.functional.ValueFunction;
 import ru.threedisevenzeror.datatree.util.IndexedPredicate;
+import ru.threedisevenzeror.datatree.wrapper.collection.base.ItemCollectionValue;
 
 import java.util.HashMap;
 import java.util.Map;
