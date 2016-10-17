@@ -3,13 +3,13 @@ package ru.threedisevenzeror.datatree.wrapper.collection;
 import ru.threedisevenzeror.datatree.base.ConstantValue;
 import ru.threedisevenzeror.datatree.base.Value;
 import ru.threedisevenzeror.datatree.base.functional.ValueFunction;
+import ru.threedisevenzeror.datatree.util.Function;
 import ru.threedisevenzeror.datatree.util.IndexedPredicate;
 import ru.threedisevenzeror.datatree.wrapper.ObjectValue;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.function.Function;
 
 /**
  * Created by ThreeDISevenZeroR on 09.10.2016.
