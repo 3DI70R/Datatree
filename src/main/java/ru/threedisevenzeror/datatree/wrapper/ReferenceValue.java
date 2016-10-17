@@ -9,7 +9,11 @@ import ru.threedisevenzeror.datatree.base.Value;
 public class ReferenceValue<T> extends AbstractReferenceValue<T, Value<T>> {
 
     public ReferenceValue() {
-        this(null);
+        this((T) null);
+    }
+
+    public ReferenceValue(T value) {
+        this(Value.constant(value));
     }
 
     public ReferenceValue(Value<T> value) {
