@@ -1,9 +1,11 @@
 package ru.threedisevenzeror.datatree.wrapper.collection;
 
+import ru.threedisevenzeror.datatree.base.ConstantValue;
 import ru.threedisevenzeror.datatree.base.Value;
 import ru.threedisevenzeror.datatree.base.functional.ValueFunction;
 import ru.threedisevenzeror.datatree.util.IndexedPredicate;
-import ru.threedisevenzeror.datatree.wrapper.collection.base.ItemCollectionValue;
+import ru.threedisevenzeror.datatree.wrapper.ObjectValue;
+import ru.threedisevenzeror.datatree.wrapper.bool.BooleanValue;
 
 import java.util.ArrayList;
 import java.util.Arrays;

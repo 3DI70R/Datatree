@@ -1,9 +1,12 @@
 package ru.threedisevenzeror.datatree.base.functional;
 
 import ru.threedisevenzeror.datatree.base.AbstractDependentValue;
+import ru.threedisevenzeror.datatree.base.OnValueChangedListener;
 import ru.threedisevenzeror.datatree.base.Value;
-import ru.threedisevenzeror.datatree.util.Supplier;
+import ru.threedisevenzeror.datatree.wrapper.text.StringValue;
 
+import java.util.List;
+import java.util.function.Supplier;
 
 /**
  * Created by ThreeDISevenZeroR on 08.10.2016.

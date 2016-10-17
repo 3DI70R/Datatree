@@ -2,8 +2,8 @@ package ru.threedisevenzeror.datatree.base.functional;
 
 import ru.threedisevenzeror.datatree.base.AbstractDependentValue;
 import ru.threedisevenzeror.datatree.base.Value;
-import ru.threedisevenzeror.datatree.util.Function;
 
+import java.util.function.Function;
 
 /**
  * Created by ThreeDISevenZeroR on 05.10.2016.

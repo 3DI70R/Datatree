@@ -1,10 +1,12 @@
-package ru.threedisevenzeror.datatree.wrapper.collection.base;
+package ru.threedisevenzeror.datatree.wrapper.collection;
 
+import ru.threedisevenzeror.datatree.base.ConstantValue;
 import ru.threedisevenzeror.datatree.base.Value;
 import ru.threedisevenzeror.datatree.base.functional.ValueFunction;
 import ru.threedisevenzeror.datatree.base.functional.ValueSupplier;
 import ru.threedisevenzeror.datatree.util.IndexedPredicate;
 import ru.threedisevenzeror.datatree.wrapper.ObjectValue;
+import ru.threedisevenzeror.datatree.wrapper.number.ByteValue;
 import ru.threedisevenzeror.datatree.wrapper.number.IntegerValue;
 
 /**

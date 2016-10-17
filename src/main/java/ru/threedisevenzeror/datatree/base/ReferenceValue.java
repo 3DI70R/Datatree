@@ -5,5 +5,6 @@ package ru.threedisevenzeror.datatree.base;
  */
 public interface ReferenceValue<V extends Value<? extends T>, T> extends Value<T> {
     void setReference(V value);
+    void setConstant(T value);
     V getReference();
 }
